@@ -67,6 +67,8 @@ export interface ResizableProps extends React.HTMLAttributes<HTMLDivElement> {
   onResizeStart?: ResizeStartCallback,
   onResize?: ResizeCallback,
   onResizeStop?: ResizeCallback,
+  resizeRatioX?: number,
+  resizeRatioY?: number,
   style?: React.CSSProperties;
   handleStyles?: {
     top?: React.CSSProperties,
