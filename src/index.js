@@ -121,7 +121,8 @@ export type ResizableProps = {
   onResizeStop?: ResizeCallback,
   defaultSize?: Size,
   scale?: number,
-  resizeRatio?: number,
+  resizeRatioX?: number,
+  resizeRatioY?: number,
 };
 
 type State = {
@@ -183,7 +184,8 @@ const definedProps = [
   'onResizeStop',
   'handleComponent',
   'scale',
-  'resizeRatio',
+  'resizeRatioX',
+  'resizeRatioY',
 ];
 
 const baseClassName = '__resizable_base__';
@@ -216,7 +218,8 @@ export default class Resizable extends React.Component<ResizableProps, State> {
     lockAspectRatioExtraWidth: 0,
     lockAspectRatioExtraHeight: 0,
     scale: 1,
-    resizeRatio: 1,
+    resizeRatioX: 1,
+    resizeRatioY: 1,
   };
 
   constructor(props: ResizableProps) {
@@ -417,7 +420,8 @@ export default class Resizable extends React.Component<ResizableProps, State> {
     const { lockAspectRatio, lockAspectRatioExtraHeight, lockAspectRatioExtraWidth } = this.props;
     const scale = this.props.scale || 1;
     let { maxWidth, maxHeight, minWidth, minHeight } = this.props;
-    const resizeRatio = this.props.resizeRatio || 1;
+    const resizeRatioX = this.props.resizeRatioX || 1;
+    const resizeRatioY = this.props.resizeRatioY || 1;
 
     // TODO: refactor
     const parentSize = this.getParentSize();
@@ -446,19 +450,19 @@ export default class Resizable extends React.Component<ResizableProps, State> {
     let newWidth = original.width;
     let newHeight = original.height;
     if (/right/i.test(direction)) {
-      newWidth = original.width + (((clientX - original.x) * resizeRatio) / scale);
+      newWidth = original.width + (((clientX - original.x) * resizeRatioX) / scale);
       if (lockAspectRatio) newHeight = (newWidth - lockAspectRatioExtraWidth) / ratio + lockAspectRatioExtraHeight;
     }
     if (/left/i.test(direction)) {
-      newWidth = original.width - (((clientX - original.x) * resizeRatio) / scale);
+      newWidth = original.width - (((clientX - original.x) * resizeRatioX) / scale);
       if (lockAspectRatio) newHeight = (newWidth - lockAspectRatioExtraWidth) / ratio + lockAspectRatioExtraHeight;
     }
     if (/bottom/i.test(direction)) {
-      newHeight = original.height + (((clientY - original.y) * resizeRatio) / scale);
+      newHeight = original.height + (((clientY - original.y) * resizeRatioY) / scale);
       if (lockAspectRatio) newWidth = (newHeight - lockAspectRatioExtraHeight) * ratio + lockAspectRatioExtraWidth;
     }
     if (/top/i.test(direction)) {
-      newHeight = original.height - (((clientY - original.y) * resizeRatio) / scale);
+      newHeight = original.height - (((clientY - original.y) * resizeRatioY) / scale);
       if (lockAspectRatio) newWidth = (newHeight - lockAspectRatioExtraHeight) * ratio + lockAspectRatioExtraWidth;
     }
 
